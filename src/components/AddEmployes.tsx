@@ -1,8 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { db, storage } from '../services/firebase';
-import { ref, uploadBytes } from 'firebase/storage'; // Importe funções de upload do storage
+import { db } from '../services/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { TextField, Button, Grid, Typography, Paper, Divider } from '@mui/material';
 import { Document, Page, Text, View, Image, PDFDownloadLink, StyleSheet, pdf } from '@react-pdf/renderer';
