@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../services/firebase';
+import { db, storage } from '../services/firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'; // Alterado para upload resumível
 import { collection, addDoc } from 'firebase/firestore';
 import { TextField, Button, Grid, Typography, Paper, Divider } from '@mui/material';
-import { Document, Page, Text, View, Image, PDFDownloadLink, StyleSheet, pdf } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image, StyleSheet, pdf } from '@react-pdf/renderer';
 import { Viewer, Worker } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 
@@ -19,7 +20,6 @@ const styles = StyleSheet.create({
   image: { width: 80, height: 80, marginBottom: 8, borderRadius: 40, alignSelf: 'center' },
 });
 
-// Define a interface para as propriedades de MyDocument
 interface MyDocumentProps {
   name: string;
   email: string;
@@ -29,7 +29,7 @@ interface MyDocumentProps {
   admissionDate: string;
   sector: string;
   salary: string;
-  profileImage: string | null; 
+  profileImage: string | null;
 }
 
 const MyDocument: React.FC<MyDocumentProps> = ({ name, email, phone, gender, position, admissionDate, sector, salary, profileImage }) => (
@@ -61,12 +61,11 @@ const FormAddUser: React.FC = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [gender, setGender] = useState('');
-
   const [position, setPosition] = useState('');
   const [admissionDate, setAdmissionDate] = useState('');
   const [sector, setSector] = useState('');
   const [salary, setSalary] = useState('');
-  const [profileImage, setProfileImage] = useState<string | null>(null); 
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<string | null>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,30 +85,54 @@ const FormAddUser: React.FC = () => {
       alert("Nome e e-mail são obrigatórios!");
       return;
     }
+
     try {
       const usersCollectionRef = collection(db, 'employees');
-      await addDoc(usersCollectionRef, {
-        name,
-        email,
-        phone,
-        gender,
-        position,
-        admissionDate,
-        sector,
-        salary,
-        profileImage,
-      });
-      alert('Usuário adicionado com sucesso!');
-      setName('');
-      setEmail('');
-      setPhone('');
-      setGender('');
-      setPosition('');
-      setAdmissionDate('');
-      setSector('');
-      setSalary('');
-      setProfileImage(null); 
-      setPdfBlob(null); 
+      
+      // Gerar PDF Blob
+      const blob = await pdf(<MyDocument name={name} email={email} phone={phone} gender={gender} position={position} admissionDate={admissionDate} sector={sector} salary={salary} profileImage={profileImage} />).toBlob();
+
+      // Salvar o PDF no Firebase Storage
+      const pdfRef = ref(storage, `employee_pdfs/${name}_${email}.pdf`);
+      const uploadTask = uploadBytesResumable(pdfRef, blob);
+
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          // Progresso do upload (opcional)
+        }, 
+        (error) => {
+          console.error("Erro ao enviar PDF: ", error);
+          alert('Erro ao salvar PDF. Tente novamente.');
+        },
+        async () => {
+          // Após o upload, obter o link do PDF
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          // Salvar dados no Firestore com o link do PDF
+          await addDoc(usersCollectionRef, {
+            name,
+            email,
+            phone,
+            gender,
+            position,
+            admissionDate,
+            sector,
+            salary,
+            profileImage,
+            pdfUrl: downloadURL,  // URL do PDF
+          });
+          alert('Usuário adicionado com sucesso!');
+          setName('');
+          setEmail('');
+          setPhone('');
+          setGender('');
+          setPosition('');
+          setAdmissionDate('');
+          setSector('');
+          setSalary('');
+          setProfileImage(null); 
+          setPdfBlob(null); 
+        }
+      );
     } catch (error) {
       console.error("Erro ao adicionar usuário: ", error);
       alert('Erro ao adicionar usuário. Tente novamente.');
@@ -188,11 +211,9 @@ const FormAddUser: React.FC = () => {
                 <Grid item xs={12}>
                   <TextField
                     label="Data de Admissão"
-                    type="date"
                     value={admissionDate}
                     onChange={(e) => setAdmissionDate(e.target.value)}
                     fullWidth
-                    InputLabelProps={{ shrink: true }}
                     size="small"
                   />
                 </Grid>
@@ -208,7 +229,6 @@ const FormAddUser: React.FC = () => {
                 <Grid item xs={12}>
                   <TextField
                     label="Salário"
-                    type="number"
                     value={salary}
                     onChange={(e) => setSalary(e.target.value)}
                     fullWidth
@@ -216,15 +236,10 @@ const FormAddUser: React.FC = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    style={{ width: '100%' }}
-                  />
+                  <input type="file" onChange={handleImageChange} />
                 </Grid>
                 <Grid item xs={12}>
-                  <Button type="submit" variant="contained" color="primary" fullWidth size="small">
+                  <Button type="submit" variant="contained" color="primary" fullWidth>
                     Adicionar Funcionário
                   </Button>
                 </Grid>
@@ -232,29 +247,20 @@ const FormAddUser: React.FC = () => {
             </form>
           </Paper>
         </Grid>
-        <Grid item xs={12} md={7}>
-          <Paper elevation={3} style={{ padding: '10px', margin: '10px' }}>
-            <Typography variant="h6" gutterBottom>
-              Pré-visualização do PDF
-            </Typography>
-            {pdfBlob && (
-              <div style={{ height: '800px' }}>
+        {pdfBlob && (
+          <Grid item xs={12} md={7}>
+            <Paper elevation={3} style={{ padding: '10px', margin: '10px' }}>
+              <Typography variant="h6" gutterBottom>
+                Visualizar PDF
+              </Typography>
+              <div style={{ height: '600px' }}>
                 <Worker workerUrl={PDF_WORKER_URL}>
                   <Viewer fileUrl={pdfBlob} />
                 </Worker>
-                <PDFDownloadLink
-                    document={<MyDocument name={name} email={email} phone={phone} gender={gender} position={position} admissionDate={admissionDate} sector={sector} salary={salary} profileImage={profileImage} />}
-                    fileName="cadastro-funcionario.pdf"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <Button variant="contained" color="secondary" fullWidth size="small">
-                      Baixar PDF do Funcionário
-                    </Button>
-                  </PDFDownloadLink>
               </div>
-            )}
-          </Paper>
-        </Grid>
+            </Paper>
+          </Grid>
+        )}
       </Grid>
     </div>
   );
