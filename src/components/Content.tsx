@@ -60,7 +60,7 @@ function Content() {
                     <Button
                         variant="outlined"
                         component={Link}
-                        to="/AddEmployes"
+                        to="/list-employee"
                         sx={{
                             color: '#19B5FE',
                             borderColor: '#19B5FE',
