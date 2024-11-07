@@ -1,6 +1,6 @@
 # Projeto de Edição de Funcionários
 
-![MANEMP](assets/thumbreadmepng);
+![MANEMP](https://ibb.co/RStGBVp)
 
 ## Descrição
 
