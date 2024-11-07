@@ -2,7 +2,7 @@ import React from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../services/firebase'; 
 import { FaGoogle } from 'react-icons/fa';  
-import "../loginstyle.css";
+import "../Styles/loginstyle.css";
 
 
 const signInWithGoogle = async () => {
@@ -28,7 +28,7 @@ const signInWithGoogle = async () => {
 const Login = () => {
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2 style={{color: 'black'}}>Login</h2>
 
       <button className="google-login-button" onClick={signInWithGoogle}>
         <FaGoogle className="google-icon" /> Login com Google

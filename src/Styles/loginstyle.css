@@ -20,7 +20,14 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 20%;
   }
+
+  @media screen and (max-width: 600px) {
+    .google-login-button {
+        width: 70%;
+    }
+}
   
   .google-login-button:hover {
     background-color: #357ae8; /* Cor um pouco mais escura no hover */
