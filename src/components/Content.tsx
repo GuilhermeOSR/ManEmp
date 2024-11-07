@@ -20,8 +20,6 @@ function Content() {
                 px: isMobile ? 2 : 4,
             }}
         >
-
- 
             <Paper
                 elevation={3}
                 sx={{
@@ -31,8 +29,7 @@ function Content() {
                     width: '100%',
                     backgroundColor: theme.palette.background.paper,
                 }}
-            >
-                
+            >     
                 <Typography variant="h4" sx={{ mb: 4, color: theme.palette.text.secondary }}>
                     Escolha uma das opções abaixo para começar:
                 </Typography>
@@ -54,7 +51,7 @@ function Content() {
                             fontWeight: 'bold',
                         }}
                     >
-                        Cadastrar Usuário
+                        Cadastrar Funcionário
                     </Button>
                     
                     <Button
@@ -74,7 +71,7 @@ function Content() {
                             fontWeight: 'bold',
                         }}
                     >
-                        Gerenciar Usuários
+                        Gerenciar Funcionários
                     </Button>
                 </Stack>
             </Paper>

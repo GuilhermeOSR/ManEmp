@@ -1,0 +1,20 @@
+
+.MuiAvatar-root {
+    width: 40px;  
+    height: 40px;  
+    cursor: pointer;  
+    transition: transform 0.2s ease;  
+  }
+  
+  .MuiAvatar-root:hover {
+    transform: scale(1.1);  /* Aumenta o tamanho do avatar ao passar o mouse */
+  }
+
+  /* Item do menu */
+.MuiMenuItem-root {
+    font-weight: bold;
+  }
+  
+  .MuiMenuItem-root:hover {
+    background-color: #f5f5f5;
+  }

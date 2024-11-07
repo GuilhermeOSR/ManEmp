@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../services/firebase'; 
-import { collection, query, where, getDocs, getDoc, writeBatch, doc, setDoc } from 'firebase/firestore';
+import { db } from '../services/firebase';
+import { collection, query, where, getDocs, writeBatch, getDoc, doc, setDoc } from 'firebase/firestore';
 import { Typography, List, ListItem, ListItemText } from '@mui/material';
 
 // Função para atualizar dados do funcionário
@@ -8,14 +8,12 @@ const updateEmployee = async (id: string, updatedData: any) => {
     const employeeRef = doc(db, 'employees', id);
     const employeeSnapshot = await getDoc(employeeRef);
 
-    // Verifica se o documento existe antes de acessar os dados
     if (!employeeSnapshot.exists()) {
         console.error("Funcionário não encontrado:", id);
-        return; 
+        return;
     }
 
     const oldData = employeeSnapshot.data();
-
     const changes = [];
     for (const key in updatedData) {
         if (updatedData[key] !== oldData[key]) {
@@ -37,7 +35,6 @@ const updateEmployee = async (id: string, updatedData: any) => {
         await batch.commit();
     }
 
-    // Atualiza os dados do funcionário
     await setDoc(employeeRef, updatedData, { merge: true });
 };
 
@@ -51,12 +48,18 @@ const ChangeHistory: React.FC<{ employeeId: string }> = ({ employeeId }) => {
                 const historyCollection = collection(db, 'changeHistory');
                 const q = query(historyCollection, where('employeeId', '==', employeeId));
                 const querySnapshot = await getDocs(q);
+
                 const historyData = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data(),
+                    date: doc.data().date,
                     description: `${doc.data().field} alterado de "${doc.data().oldValue}" para "${doc.data().newValue}"`
                 }));
-                setHistory(historyData);
+
+                // Ordenar o histórico de alterações pela data (em ordem decrescente)
+                const sortedHistory = historyData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+                setHistory(sortedHistory);
             } catch (error) {
                 console.error("Erro ao buscar histórico:", error);
             } finally {
@@ -88,7 +91,7 @@ const ChangeHistory: React.FC<{ employeeId: string }> = ({ employeeId }) => {
                 {history.length > 0 ? (
                     history.map((change) => (
                         <ListItem key={change.id}>
-                            <ListItemText 
+                            <ListItemText
                                 primary={change.description}
                                 secondary={`Data: ${formatDate(change.date)}`} 
                             />

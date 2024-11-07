@@ -1,0 +1,8 @@
+.pdf-container {
+  display: flex;
+  justify-content: end;
+  width: 100%;    /* Ajuste a largura conforme necessário */
+  height: 600px; /* Ajuste a altura conforme necessário */
+
+
+}

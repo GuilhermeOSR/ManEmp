@@ -1,0 +1,68 @@
+.CampoNomeImg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+   
+}
+
+
+.campoNome {
+    width: 100%;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.fotoContent {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    
+}
+
+.custom-file-upload {
+    border: 1px solid #1976d2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #ccc;
+    width: 120px;
+    height: 120px;
+    font-size: 30px;
+    position: relative;
+    overflow: hidden;
+
+    
+}
+
+.custom-file-upload img.image-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1; /* Torna a imagem sempre visível */
+    
+}
+
+.custom-file-upload span {
+    position: relative;
+    
+
+    padding: 5px; /* Adiciona um pequeno espaçamento ao redor do '+' */
+
+    
+    z-index: 1; /* Mantém o '+' sobreposto à imagem */
+}
+
+.custom-file-upload:hover {
+    transition: 0.6s ease;
+    color: #19B5FE;
+    transform: scale(1.05);
+}

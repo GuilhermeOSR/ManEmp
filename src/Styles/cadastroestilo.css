@@ -1,0 +1,116 @@
+/* CadastroEstilo.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #d7d3d3;
+  color: #e5e5e5;
+  margin: 0;
+  padding: 0;
+
+}
+
+  .pdf-viewer-container {
+    width: 60%;    /* Ajuste a largura conforme necessário */
+    height: 600px; /* Ajuste a altura conforme necessário */
+  
+  
+  }
+  
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.grid-container {
+    margin-top: 10px;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+  .paper-style {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  h5 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #1976d2;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .text-field {
+    margin: 10px 0;
+  }
+  
+  .text-field label {
+    color: #555;
+    font-weight: 500;
+  }
+  
+  .text-field input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  button.primary {
+    background-color: #1976d2;
+    color: #fff;
+  }
+  
+  button.primary:hover {
+    background-color: #0d47a1;
+  }
+  
+  button.secondary {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  button.secondary:hover {
+    background-color: #bdbdbd;
+  }
+
+  
+  /* Organizamos os itens específicos no grid para manter a ordem */
+  .grid-item-full {
+    grid-column: 1 / -1;
+  }
+  
+  .pdf-download-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .pdf-download-link a {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .pdf-download-link a:hover {
+    text-decoration: underline;
+  }
