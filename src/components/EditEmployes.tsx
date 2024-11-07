@@ -278,7 +278,6 @@ const EditEmployes: React.FC  = () => {
     
             alert('Funcionário atualizado com sucesso!');
 
-            window.location.reload();
         } catch (error) {
             console.error("Erro ao atualizar funcionário:", error);
             alert("Erro ao atualizar funcionário.");
