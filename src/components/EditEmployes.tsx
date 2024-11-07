@@ -392,7 +392,28 @@ const EditEmployes: React.FC  = () => {
                                     fullWidth
                                     margin="normal"
                                 />
+
                                 <Button type="submit" variant="contained" color="primary">Salvar</Button>
+                                {pdfBlob && (
+                            <PDFDownloadLink
+                                document={<PDFDocumentComponentEdit employeeData={employee} />}
+                                fileName={`${employee?.name || 'funcionario'}-dados.pdf`}
+                                style={{ textDecoration: 'none', marginTop: '20px', display: 'block' }}
+                            >
+                                 <Button
+                                    sx={{ 
+                                    marginTop: '5px', 
+                                    width: '100%', 
+                                    backgroundColor: '#6A0DAD', 
+                                    color: '#FFF', 
+                                    '&:hover': { backgroundColor: '#5A0C8B' } 
+                                    }}
+                                    variant="contained"
+                                    fullWidth
+
+                                >Baixar</Button>
+                            </PDFDownloadLink>
+                        )}
                             </form>
                         </Grid>
                         <Grid item xs={12} md={6}>
