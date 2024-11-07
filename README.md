@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Projeto de Edição de Funcionários
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descrição
 
-## Available Scripts
+Este projeto é uma aplicação React que permite editar dados de funcionários em uma base de dados do Firebase. Ele oferece funcionalidades para atualizar informações, carregar uma foto de perfil, e gerar um PDF com os dados do funcionário.
 
-In the project directory, you can run:
+### Tecnologias Utilizadas
 
-### `npm start`
+- **React** - Biblioteca para construção da interface de usuário.
+- **Firebase** - Para gerenciar dados e fotos no Firestore e Firebase Storage.
+- **Material-UI** - Biblioteca de componentes para UI com estilo.
+- **react-pdf** - Para gerar PDFs com as informações do funcionário.
+- **PDF-lib** - Para manipulação e personalização de PDFs.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Funcionalidades
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Edição de dados**: Atualiza informações como nome, e-mail, telefone, cargo e outros dados de um funcionário.
+- **Upload de foto de perfil**: Permite a troca da foto de perfil do funcionário.
+- **Geração de PDF**: Ao editar os dados, é possível gerar um PDF com as informações atualizadas do funcionário.
+- **Histórico de mudanças**: Registra todas as alterações feitas nos dados de um funcionário.
 
-### `npm test`
+## Como Rodar o Projeto
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Requisitos
 
-### `npm run build`
+1. **Node.js** (recomendado versão >= 16.x)
+2. **Firebase** (é necessário configurar a autenticação e banco de dados Firebase)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Instalação
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seuusuario/seuprojeto.git
+   cd seuprojeto
+   npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Configure seu firebase no projeto. Crie um arquivo .env com as credenciais do Firebase (referente ao seu projeto no Firebase console):
+    REACT_APP_FIREBASE_API_KEY=your-api-key
+    REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
+    REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+    REACT_APP_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+    REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+    REACT_APP_FIREBASE_APP_ID=your-app-id
