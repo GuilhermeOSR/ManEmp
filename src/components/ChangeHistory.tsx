@@ -86,7 +86,7 @@ const ChangeHistory: React.FC<{ employeeId: string }> = ({ employeeId }) => {
 
     return (
         <div>
-            <Typography variant="h6" component="h3">Histórico de Alterações</Typography>
+            <Typography variant="h6" component="h3" sx={{marginTop: '10px'}}>Histórico de Alterações</Typography>
             <List>
                 {history.length > 0 ? (
                     history.map((change) => (

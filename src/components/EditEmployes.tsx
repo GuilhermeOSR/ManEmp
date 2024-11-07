@@ -1,8 +1,3 @@
-
-
-
-
-
 import React, { useEffect, useState } from 'react';
 import { db, storage } from '../services/firebase'; // Assumindo que você tenha configurado o Firebase Storage
 import { collection, doc, getDoc, updateDoc, writeBatch } from 'firebase/firestore';
@@ -181,11 +176,13 @@ const EditEmployes: React.FC  = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setEmployee((prev: any) => ({ ...prev, [name]: value }));
+        
     };
 
     const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             setNewPhoto(event.target.files[0]);
+            
         }
     };
 
@@ -200,7 +197,7 @@ const EditEmployes: React.FC  = () => {
     
             const employeeDoc = doc(db, 'employees', id);
     
-            // Obtemos os dados atuais do funcionário antes de qualquer alteração
+
             const employeeSnapshot = await getDoc(employeeDoc);
             const oldEmployeeData = employeeSnapshot.exists() ? employeeSnapshot.data() : null;
     
@@ -244,9 +241,9 @@ const EditEmployes: React.FC  = () => {
                 });
             }
     
-            // Agora, se houver mudanças, registramos no histórico
+     
             if (changedFields.length > 0) {
-                const batch = writeBatch(db); // Usando batch para eficiência
+                const batch = writeBatch(db); 
     
                 changedFields.forEach(change => {
                     const changeHistoryData = {
@@ -261,16 +258,17 @@ const EditEmployes: React.FC  = () => {
                     batch.set(doc(changeHistoryRef), changeHistoryData); // Adiciona as alterações no batch
                 });
     
-                // Comita todas as alterações no histórico
+        
                 await batch.commit();
             }
     
-            // Upload da nova foto, se houver
+            // Upload da nova foto
             let photoURL = employee?.photoURL || null;
             if (newPhoto) {
                 const photoRef = ref(storage, `employees/${id}/${newPhoto.name}`);
                 await uploadBytes(photoRef, newPhoto);
                 photoURL = await getDownloadURL(photoRef);
+       
             }
     
             // Atualiza o documento do funcionário com a nova URL da foto
