@@ -277,6 +277,8 @@ const EditEmployes: React.FC  = () => {
             await updateDoc(employeeDoc, { ...employee, photoURL });
     
             alert('Funcionário atualizado com sucesso!');
+
+            window.location.reload();
         } catch (error) {
             console.error("Erro ao atualizar funcionário:", error);
             alert("Erro ao atualizar funcionário.");
@@ -353,7 +355,7 @@ const EditEmployes: React.FC  = () => {
                                     fullWidth
                                     margin="normal"
                                 />
-                                
+
                                 <TextField
                                     name="position"
                                     label="Cargo"
