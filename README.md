@@ -1,5 +1,7 @@
 # Projeto de Edição de Funcionários
 
+![MANEMP](assets/thumbreadmepng);
+
 ## Descrição
 
 Este projeto é uma aplicação React que permite editar dados de funcionários em uma base de dados do Firebase. Ele oferece funcionalidades para atualizar informações, carregar uma foto de perfil, e gerar um PDF com os dados do funcionário.
@@ -7,6 +9,7 @@ Este projeto é uma aplicação React que permite editar dados de funcionários 
 ### Tecnologias Utilizadas
 
 - **React** - Biblioteca para construção da interface de usuário.
+- **TypeScript** - Adiciona tipagem estática ao código, ajudando a identificar erros durante o desenvolvimento e melhorando a manutenção do projeto.
 - **Firebase** - Para gerenciar dados e fotos no Firestore e Firebase Storage.
 - **Material-UI** - Biblioteca de componentes para UI com estilo.
 - **react-pdf** - Para gerar PDFs com as informações do funcionário.
@@ -35,6 +38,7 @@ Este projeto é uma aplicação React que permite editar dados de funcionários 
    npm install
 
 2. Configure seu firebase no projeto. Crie um arquivo .env com as credenciais do Firebase (referente ao seu projeto no Firebase console):
+     ```bash
     REACT_APP_FIREBASE_API_KEY=your-api-key
     REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
     REACT_APP_FIREBASE_PROJECT_ID=your-project-id
